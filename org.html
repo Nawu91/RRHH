@@ -18,7 +18,7 @@
     function init() {
       // Crear el diagrama
       var $ = go.GraphObject.make;
-
+      
       var myDiagram =
         $(go.Diagram, "myDiagramDiv",
           {
@@ -26,17 +26,18 @@
             contentAlignment: go.Spot.Top,
             "undoManager.isEnabled": true // Habilitar la capacidad de deshacer/rehacer
           });
+      
 
       // Definir la plantilla de nodo
       myDiagram.nodeTemplate =
         $(go.Node, "Auto",
-          { deletable: false },
+          { contextMenu: window.myHTMLLightBox },
           $(go.Shape, "RoundedRectangle",
             { fill: "#76bac6" },
             new go.Binding("fill", "color")),
           $(go.Panel, "Vertical",
             $(go.TextBlock,
-              { margin: 3, font: "bold 16px sans-serif", stroke: "white"},
+              {margin: 3, font: "bold 16px sans-serif", stroke: "white"},
               new go.Binding("text", "name")),
             $(go.TextBlock,
               { margin: 3, font: "bold 14px sans-serif", stroke: "white" },
@@ -74,18 +75,17 @@
         );
       myDiagram.linkTemplate =
         $(go.Link, go.Link.Orthogonal,
-          { corner: 5, selectable: false },
+          { corner: 5, selectable: true },
           $(go.Shape, { strokeWidth: 3, stroke: "#424242" }));
 
       // Ajustar la dirección de crecimiento de los nodos secundarios
       myDiagram.layout =
         $(go.TreeLayout,
-          { angle: 90, layerSpacing: 50, nodeSpacing: 20, arrangement: go.TreeLayout.ArrangementVertical });
+          { angle: 90, layerSpacing: 50, nodeSpacing: 20, arrangement: go.TreeLayout.ArrangementHorizontal });
 
       // Crear los datos del diagrama
       var nodeDataArray = [
-        {key: 1, name: "MIGLIORE, MARIA", CUIL: "27-31925246-6", Cod_Repart: "45010000", Sigla: "MDHYHGC", Repartición: "Ministerio de Desarrollo Humano y Hábitat", Rol_Desde: "2019-12-10", Rol_Hasta: "Vigente", Acto_Administrativo: "DEC/458/AJG/2019", Correo_oficial: "mmigliore@buenosaires.gob.ar", correo_alternativo: "migliore.maria@gmail.com", Telefono: "1128851168"},
-        {key: 2, name: "MRAIDA, GABRIEL SEBASTIAN", CUIL: "20-33434311-2", Cod_Repart: "45010001", Sigla: "CDHH", Repartición: "Coordinación de Desarrollo Humano y Hábitat", Rol_Desde: "2023-07-01", Rol_Hasta: "Vigente", Acto_Administrativo: "DEC/204/AJG/2023", Correo_oficial: "gmraida@buenosaires.gob.ar", correo_alternativo: "gabriel.mraida@gmail.com", Telefono: "nan"},
+        {key: 1, name: "MRAIDA, GABRIEL SEBASTIAN", CUIL: "20-33434311-2", Cod_Repart: "45010000", Sigla: "MDHYHGC", Repartición: "Ministerio de Desarrollo Humano y Hábitat", Rol_Desde: "24/8/2023", Rol_Hasta: "Vigente", Acto_Administrativo: "DEC/234/AJG/2023", Correo_oficial: "gmraida@buenosaires.gob.ar", correo_alternativo: "gabriel.mraida@gmail.com", Telefono: "1141585403"},
         {key: 3, name: "GIRAUDO, MAURICIO JESUS", CUIL: "20-22625002-7", Cod_Repart: "45340000", Sigla: "SSFPFC", Repartición: "SS Fortalecimiento Personal, Familiar y Comunitario", Rol_Desde: "2022-04-01", Rol_Hasta: "Vigente", Acto_Administrativo: "DEC/112/AJG/2022", Correo_oficial: "mjgiraudo@buenosaires.gob.ar", correo_alternativo: "mjrgiraudo7@gmail.com", Telefono: "1122850575"},
         {key: 4, name: "MARTINEZ, HEBE", CUIL: "23-29259209-4", Cod_Repart: "45010020", Sigla: "UAIMDHYH", Repartición: "Unidad de Auditoría Interna MDHYHGC", Rol_Desde: "2019-12-10", Rol_Hasta: "Vigente", Acto_Administrativo: "DEC/523/AJG/2019", Correo_oficial: "hebemartinez@buenosaires.gob.ar", correo_alternativo: "hebe432@hotmail.com", Telefono: "1157057987"},
         {key: 5, name: "HOVASSAPIAN, MAGALI TIZIANA", CUIL: "27-38616972-7", Cod_Repart: "45010620", Sigla: "DGPLCG", Repartición: "DG Planificación y Control de Gestión", Rol_Desde: "2023-03-01", Rol_Hasta: "Vigente", Acto_Administrativo: "DEC/87/AJG/2023", Correo_oficial: "mhovassapian@buenosaires.gob.ar", correo_alternativo: "magalihova@hotmail.com", Telefono: "1131523654"},
@@ -141,13 +141,13 @@
         {key: 55, name: "BARAJA, EZEQUIEL NICOLAS", CUIL: "20-32905850-7", Cod_Repart: "45620010", Sigla: "DGAII", Repartición: "GO Red de Centros de Inclusión Social", Rol_Desde: "2023-04-01", Rol_Hasta: "Vigente", Acto_Administrativo: "RES/3647/MHFGC/2023", Correo_oficial: "bezequiel@buenosaires.gob.ar", correo_alternativo: "ezequielnb87@gmail.com", Telefono: "nan"},
         {key: 56, name: "MENDEZ, LEANDRO SEBASTIAN", CUIL: "20-33267191-0", Cod_Repart: "45010081", Sigla: "DGDEIS", Repartición: "GO Estrategias de Acompañamiento y Desarrollo", Rol_Desde: "2021-10-01", Rol_Hasta: "Vigente", Acto_Administrativo: "RES/4987/MHFGC/2021", Correo_oficial: "leandromendez@buenosaires.gob.ar", correo_alternativo: "leandro.smendez@gmail.com", Telefono: "1134699817"},
         {key: 57, name: "GONZALEZ, CLAUDIO MARCELO", CUIL: "20-22328824-4", Cod_Repart: "45170531", Sigla: "DGDEIS", Repartición: "GO Vinculación Institucional", Rol_Desde: "2023-04-01", Rol_Hasta: "Vigente", Acto_Administrativo: "RES/3120/MHFGC/2023", Correo_oficial: "claudiomarcelogonzalez@buenosaires.gob.ar", correo_alternativo: "cmarcelo.gonzalez72@gmail.com", Telefono: "1144162674"},
-        {key: 58, name: "nan", CUIL: "nan", Cod_Repart: "45010611", Sigla: "DGDIM", Repartición: "GO Desarrollo Informático", Rol_Desde: "nan", Rol_Hasta: "Vigente", Acto_Administrativo: "nan", Correo_oficial: "nan", correo_alternativo: "nan", Telefono: "nan"},
+        {key: 58, name: "GUSTAVO ANIBAL NESA", CUIL: "20179689163", Cod_Repart: "45010611", Sigla: "DGDIM", Repartición: "GO Desarrollo Informático", Rol_Desde: "1/7/2023", Rol_Hasta: "Vigente", Acto_Administrativo: "RES/5179/MHFC/2023", Correo_oficial: "gnesa@buenosaires.gob.ar", correo_alternativo: "gustavonesa@gmail.com", Telefono: "nan"},
         {key: 59, name: "PANTA,MARTIN LEO", CUIL: "20-22471412-3", Cod_Repart: "45010160", Sigla: "DGDIM", Repartición: "GO Gestión de Recursos Humanos", Rol_Desde: "2018-02-01", Rol_Hasta: "Vigente", Acto_Administrativo: "RES/788/MHGC/2018", Correo_oficial: "mpanta@buenosaires.gob.ar", correo_alternativo: "martinleopanta@gmail.com", Telefono: "1166455015"},
         {key: 60, name: "RIERA,BRENDA ELIANA", CUIL: "27-30945428-1", Cod_Repart: "45630030", Sigla: "DGDIM", Repartición: "GO Monitoreo de Políticas Sociales", Rol_Desde: "2021-12-09", Rol_Hasta: "Vigente", Acto_Administrativo: "RES/272/MHFGC/2022", Correo_oficial: "briera@buenosaires.gob.ar", correo_alternativo: "brendaeriera@gmail.com", Telefono: "1159066279"},
         {key: 61, name: "MARQUEZ, AGUSTINA", CUIL: "27-29800910-8", Cod_Repart: "45630040", Sigla: "DGDIM", Repartición: "GO Observatorio de Políticas Sociales", Rol_Desde: "2021-12-09", Rol_Hasta: "Vigente", Acto_Administrativo: "RES/275/MHFGC/2022", Correo_oficial: "agustinamarquez@buenosaires.gob.ar", correo_alternativo: "marquezagustina@gmail.com", Telefono: "1156055865"},
         {key: 62, name: "FIANUCHI, GABRIEL ADRIAN", CUIL: "20-26361875-1", Cod_Repart: "45010170", Sigla: "DGDIM", Repartición: "GO Soporte Tecnológico", Rol_Desde: "2022-05-03", Rol_Hasta: "Vigente", Acto_Administrativo: "RES/2665/MHFGC/2022", Correo_oficial: "afianuchi@buenosaires.gob.ar", correo_alternativo: "adrian.fianuchi@gmail.com", Telefono: "1156691830"},
         {key: 63, name: "POLO, ALEJANDRO RAIMUNDO", CUIL: "23-28508078-9", Cod_Repart: "45630010", Sigla: "DGINFS", Repartición: "GO Mantenimiento", Rol_Desde: "2021-09-24", Rol_Hasta: "Vigente", Acto_Administrativo: "EE/28819591/DGDIM/2021", Correo_oficial: "apolo@buenosaires.gob.ar", correo_alternativo: "centro_ale@hotmail.com", Telefono: "1144362195"},
-        {key: 64, name: "nan", CUIL: "nan", Cod_Repart: "45630020", Sigla: "DGINFS", Repartición: "GO Proyectos y Obras", Rol_Desde: "nan", Rol_Hasta: "Vigente", Acto_Administrativo: "nan", Correo_oficial: "nan", correo_alternativo: "nan", Telefono: "nan"},
+        {key: 64, name: "LUCA DI BENEDETTO", CUIL: "20358050000", Cod_Repart: "45630020", Sigla: "DGINFS", Repartición: "GO Proyectos y Obras", Rol_Desde: "22/6/2023", Rol_Hasta: "Vigente", Acto_Administrativo: "RES/5180/MHFGC/2023", Correo_oficial: "ldibenedetto@buenosaires.gob.ar", correo_alternativo: "dibenedettoluca91@gmail.com", Telefono: "1136866381"},
         {key: 65, name: "SAPIA,MARIA FLORENCIA", CUIL: "27-27216232-3", Cod_Repart: "45010140", Sigla: "DGTALMDHYHGC", Repartición: "GO Legal", Rol_Desde: "2018-01-01", Rol_Hasta: "Vigente", Acto_Administrativo: "RES/286/MHGC/2018", Correo_oficial: "fsapia@buenosaires.gob.ar", correo_alternativo: "mfsapia@gmail.com", Telefono: "1136275755"},
         {key: 66, name: "MARABOTTI,ALEJANDRO HORACIO", CUIL: "20-14885238-4", Cod_Repart: "45010150", Sigla: "DGTALMDHYHGC", Repartición: "GO Oficina de Gestión Sectorial (OGESE)", Rol_Desde: "2010-06-08", Rol_Hasta: "Vigente", Acto_Administrativo: "RES/583/MJGGC/2010", Correo_oficial: "amarabotti@buenosaires.gob.ar", correo_alternativo: "macadam3.2.1.0@hotmail.com", Telefono: "1168996330"},
         {key: 67, name: "RUFO, MARIA", CUIL: "27-27310237-5", Cod_Repart: "45010036", Sigla: "DGAPP", Repartición: "GO Articulación con el Sector Privado", Rol_Desde: "2022-03-01", Rol_Hasta: "Vigente", Acto_Administrativo: "RES/1469/MHFGC/2022", Correo_oficial: "mrufo@buenosaires.gob.ar", correo_alternativo: "rufo.maria@gmail.com", Telefono: "1157099534"},
@@ -176,15 +176,14 @@
 
       // Crear los enlaces del diagrama
       var linkDataArray = [
-        { from: 1, to: 2 },
         { from: 1, to: 3 },
         { from: 1, to: 4 },
-        { from: 2, to: 5 },
-        { from: 2, to: 6 },
-        { from: 2, to: 7 },
-        { from: 2, to: 8 },
-        { from: 2, to: 9 },
-        { from: 2, to: 10 },
+        { from: 1, to: 5 },
+        { from: 1, to: 6 },
+        { from: 1, to: 7 },
+        { from: 1, to: 8 },
+        { from: 1, to: 9 },
+        { from: 1, to: 10 },
         { from: 3, to: 11 },
         { from: 3, to: 12 },
         { from: 3, to: 13 },
@@ -266,6 +265,7 @@
 
 
       ];
+      myDiagram.contextMenu = window.myHTMLLightBox;
 
       // Asignar los datos al diagrama
       myDiagram.model = new go.GraphLinksModel(nodeDataArray, linkDataArray);
