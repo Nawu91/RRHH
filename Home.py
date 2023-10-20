@@ -4,7 +4,7 @@ import streamlit.components.v1 as components
 st.set_page_config(page_title='App RRHH',
                     layout='wide')
    
-st.title('Organigrama MDHYHGC')
+st.title('Gerencia Operativa de Gestión de RRHH')
 
 with open("org.html", "r") as file:
     html_code = file.read()
